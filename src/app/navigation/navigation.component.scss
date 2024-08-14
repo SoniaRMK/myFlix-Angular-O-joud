@@ -1,0 +1,18 @@
+nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #333;
+    background: linear-gradient(135deg, #2196F3, #E3F2FD); 
+  
+    a {
+      background: linear-gradient(135deg, #2196F3, #E3F2FD); 
+      text-decoration: none;
+      padding: 10px;
+    }
+  
+    .active {
+      font-weight: bold;
+    }
+  }
+  
