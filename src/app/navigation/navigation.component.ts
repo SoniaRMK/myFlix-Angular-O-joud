@@ -9,7 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.scss'],
   standalone: true,
-  imports: [CommonModule, MatToolbarModule, MatButtonModule]
+  imports: [CommonModule, MatToolbarModule, MatButtonModule],
 })
 export class NavigationComponent {
   constructor(private router: Router) {}

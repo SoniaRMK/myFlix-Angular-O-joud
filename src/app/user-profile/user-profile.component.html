@@ -1,0 +1,31 @@
+<!-- htmlhint doctype-first:false -->
+<!-- htmlhint attr-lowercase:false -->
+<mat-card class="profile-container mat-elevation-z4">
+  <form>
+    <mat-card-header>
+      <mat-card-title>{{ user.Username }}'s Profile</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <mat-form-field appearance="fill">
+        <mat-label>Username</mat-label>
+        <input matInput [(ngModel)]="user.Username" name="Username" readonly>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput [(ngModel)]="user.Email" name="Email" readonly>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Birthday</mat-label>
+        <input matInput [(ngModel)]="user.Birthday" name="Birthday" readonly>
+      </mat-form-field>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="button" (click)="editProfile()">Edit Profile</button>
+      <button mat-raised-button color="warn" type="button" (click)="deleteProfile()">Delete Profile</button>
+    </mat-card-actions>
+  </form>
+</mat-card>

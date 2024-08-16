@@ -21,8 +21,8 @@ import { Router } from '@angular/router';
     MatInputModule,
     MatButtonModule,
     MatFormFieldModule,
-    FormsModule
-  ]
+    FormsModule,
+  ],
 })
 export class UserLoginFormComponent implements OnInit {
   @Input() userData = {
@@ -46,13 +46,13 @@ export class UserLoginFormComponent implements OnInit {
         localStorage.setItem('token', result.token);
         this.dialogRef.close();
         this.snackBar.open('User login successful', 'OK', {
-          duration: 2000
+          duration: 2000,
         });
         this.router.navigate(['movies']);
       },
       (error) => {
         this.snackBar.open('User login failed', 'OK', {
-          duration: 2000
+          duration: 2000,
         });
       }
     );

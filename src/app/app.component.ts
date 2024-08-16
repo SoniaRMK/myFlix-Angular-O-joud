@@ -8,7 +8,7 @@ import { NavigationComponent } from './navigation/navigation.component';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   standalone: true,
-  imports: [RouterModule, CommonModule, NavigationComponent]
+  imports: [RouterModule, CommonModule, NavigationComponent],
 })
 export class AppComponent {
   title = 'myFlix-Angular-client';

@@ -20,8 +20,8 @@ import { CommonModule } from '@angular/common';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    FormsModule
-  ]
+    FormsModule,
+  ],
 })
 export class UserRegistrationFormComponent implements OnInit {
   @Input() userData = { Username: '', Password: '', Email: '', Birthday: '' };
@@ -39,14 +39,14 @@ export class UserRegistrationFormComponent implements OnInit {
       next: (result) => {
         this.dialogRef.close();
         this.snackBar.open('Registration successful!', 'OK', {
-          duration: 2000
+          duration: 2000,
         });
       },
       error: (error) => {
         this.snackBar.open('Registration failed: ' + error.message, 'OK', {
-          duration: 2000
+          duration: 2000,
         });
-      }
+      },
     });
   }
 }

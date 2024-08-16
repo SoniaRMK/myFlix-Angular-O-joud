@@ -1,0 +1,75 @@
+.profile-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  background: #141414;
+  color: #e5e5e5;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+mat-card-header {
+  background: #333;
+  color: #fff;
+  border-bottom: 1px solid #444;
+  padding: 1rem;
+  border-radius: 8px 8px 0 0;
+}
+
+mat-card-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+mat-card-content {
+  padding: 1rem;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+mat-form-field .mat-form-field-label {
+  color: #e5e5e5;
+}
+
+mat-form-field .mat-input-element {
+  color: #e5e5e5;
+}
+
+mat-form-field .mat-form-field-underline {
+  background-color: #e5e5e5;
+}
+
+mat-card-actions {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+button {
+  font-size: 1rem;
+}
+
+button.mat-raised-button {
+  padding: 0.75rem 1.5rem;
+}
+
+button.mat-raised-button.color-primary {
+  background-color: #e50914;
+  color: #fff;
+}
+
+button.mat-raised-button.color-primary:hover {
+  background-color: #f40612;
+}
+
+button.mat-raised-button.color-warn {
+  background-color: #333;
+  color: #fff;
+}
+
+button.mat-raised-button.color-warn:hover {
+  background-color: #555;
+}
