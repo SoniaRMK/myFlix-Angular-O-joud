@@ -1,19 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
 import { FetchApiDataService } from '../fetch-api-data.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { MovieCardComponent } from '../movie-card/movie-card.component';
 
 @Component({
   selector: 'app-user-profile',
+  standalone: true,
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.scss'],
-  standalone: true,
   imports: [
     CommonModule,
     MatCardModule,
@@ -21,75 +25,144 @@ import { Router } from '@angular/router';
     MatButtonModule,
     MatFormFieldModule,
     FormsModule,
+    MatIconModule,
+    MatDividerModule,
+    MovieCardComponent,
   ],
-  providers: [MatSnackBar],
 })
 export class UserProfileComponent implements OnInit {
-  user: any = {}; // Initialize the user property
+  @Input() userData = {
+    Username: '',
+    Password: '',
+    Email: '',
+    Birthday: '',
+    FavouriteMovies: [],
+  };
+
+  currentUser = JSON.parse(localStorage.getItem('user') || '{}');
+  FavMovies: any[] = this.currentUser.FavouriteMovies || [];
+  user: any = {};
+  movies: any[] = [];
 
   constructor(
-    private fetchApiData: FetchApiDataService,
-    private snackBar: MatSnackBar,
-    private router: Router
+    public fetchApiData: FetchApiDataService,
+    public snackBar: MatSnackBar,
+    public router: Router,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
     this.getUserProfile();
+    this.getFavMovies();
   }
 
   getUserProfile(): void {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const username = this.currentUser.Username;
+    this.fetchApiData.getUser(username).subscribe((user: any) => {
+      this.user = user;
+      this.userData.Username = user.Username;
+      this.userData.Email = user.Email;
+      this.userData.Birthday = user.Birthday;
+      this.FavMovies = user.FavouriteMovies || [];
+      this.fetchApiData.getAllMovies().subscribe((response) => {
+        this.FavMovies = response.filter((movie: any) =>
+          this.FavMovies.includes(movie._id)
+        );
+      });
+    });
+  }
 
-    if (user && user.Username) {
-      this.fetchApiData.getUser(user.Username).subscribe({
-        next: (response: any) => {
-          this.user = response;
-          console.log(this.user);
-        },
-        error: (err) => {
-          console.error('Error fetching user profile:', err);
-          this.snackBar.open('Error fetching user profile', 'OK', {
-            duration: 3000,
-          });
-        },
+  updateUserProfile(): void {
+    const username = this.currentUser.Username;
+    this.fetchApiData
+      .updateUser(username, this.userData)
+      .subscribe((result) => {
+        console.log('Updated user info!');
+        localStorage.setItem('user', JSON.stringify(result));
+        this.snackBar.open('User profile updated!', 'OK', {
+          duration: 2000,
+        });
       });
+  }
+
+  deleteUserProfile(): void {
+    const username = this.currentUser.Username;
+    this.fetchApiData.deleteUser(username).subscribe((result) => {
+      console.log(result);
+      this.router.navigate(['welcome']).then(() => {
+        localStorage.clear();
+        this.snackBar.open('User profile has been deleted.', 'OK', {
+          duration: 2000,
+        });
+      });
+    });
+  }
+
+  getFavMovies(): void {
+    const username = this.currentUser.Username;
+    this.fetchApiData.getAllMovies().subscribe((resp: any) => {
+      const movies = resp;
+      this.FavMovies = movies.filter((m: any) =>
+        this.FavMovies.includes(m._id)
+      );
+    });
+  }
+
+  isFavCheck(movie: any): boolean {
+    return this.FavMovies.some((id) => id === movie._id);
+  }
+
+  toggleFav(movie: any): void {
+    const isFavorite = this.isFavCheck(movie);
+    if (isFavorite) {
+      this.removeFav(movie);
     } else {
-      console.error('No username found in localStorage');
-      this.snackBar.open('No username found in localStorage', 'OK', {
-        duration: 3000,
-      });
+      this.addFav(movie);
     }
   }
 
-  editProfile(): void {
-    // Logic to edit profile
-    console.log('Profile editing is not implemented yet');
+  addFav(movie: any): void {
+    const username = this.currentUser.Username;
+    this.fetchApiData
+      .addFavoriteMovie(username, movie._id)
+      .subscribe((resp: any) => {
+        console.log(resp);
+        this.FavMovies.push(movie._id);
+        this.updateLocalStorageFavorites(movie._id, 'add');
+        this.snackBar.open('Movie added to Favourites!', 'OK', {
+          duration: 2000,
+        });
+      });
   }
 
-  deleteProfile(): void {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
+  removeFav(movie: any): void {
+    const username = this.currentUser.Username;
+    this.fetchApiData
+      .removeFavoriteMovie(username, movie._id)
+      .subscribe((resp: any) => {
+        console.log(resp);
+        this.FavMovies = this.FavMovies.filter(
+          (id: string) => id !== movie._id
+        );
+        this.updateLocalStorageFavorites(movie._id, 'remove');
+        this.snackBar.open('Movie removed from Favourites.', 'OK', {
+          duration: 2000,
+        });
+      });
+  }
 
-    if (user && user.Username) {
-      this.fetchApiData.deleteUser(user.Username).subscribe({
-        next: () => {
-          this.snackBar.open('Profile deleted successfully', 'OK', {
-            duration: 3000,
-          });
-          localStorage.clear();
-          this.router.navigate(['/welcome']);
-        },
-        error: (err) => {
-          console.error('Error deleting user profile:', err);
-          this.snackBar.open('Error deleting profile', 'OK', {
-            duration: 3000,
-          });
-        },
-      });
+  private updateLocalStorageFavorites(
+    movieId: string,
+    action: 'add' | 'remove'
+  ): void {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    if (action === 'add') {
+      user.FavouriteMovies.push(movieId);
     } else {
-      console.error('No username found in localStorage');
-      this.snackBar.open('No username found in localStorage', 'OK', {
-        duration: 3000,
-      });
+      user.FavouriteMovies = user.FavouriteMovies.filter(
+        (id: string) => id !== movieId
+      );
     }
+    localStorage.setItem('user', JSON.stringify(user));
   }
 }

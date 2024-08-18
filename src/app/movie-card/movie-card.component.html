@@ -1,21 +1,27 @@
-<div style="display: flex; flex-wrap: wrap;">
-  <mat-card *ngFor="let movie of movies;" style="flex: 1 1 30%; margin: 10px;">
+<!-- htmlhint doctype-first:false -->
+<!-- htmlhint attr-lowercase:false -->
+
+<div class="movie-grid">
+  <mat-card *ngFor="let movie of movies;" class="movie-card">
     <mat-card-header>
       <mat-card-title>
         {{ movie.Title }}
       </mat-card-title>
-      <mat-card-subtitle>
-        Directed by: {{ movie.Director.Name }}
-      </mat-card-subtitle>
     </mat-card-header>
     <img mat-card-image [src]="movie.ImagePath" alt="{{ movie.Title }}">
-    <mat-card-content>
-      <p><strong>Genre:</strong> {{ movie.Genre.Name }}</p>
-      <p><strong>Synopsis:</strong> {{ movie.Description }}</p>
-    </mat-card-content>
     <mat-card-actions>
-      <button mat-button color="primary">More Info</button>
-      <button mat-button color="warn">Favorite</button>
+      <button mat-flat-button color="primary" (click)="showDetail(movie)">
+        Synopsis
+      </button>
+      <button mat-stroked-button color="accent" (click)="showGenre(movie.Genre.Name)">
+        Genre
+      </button>
+      <button mat-stroked-button color="accent" (click)="showDirector(movie.Director.Name)">
+        Director
+      </button>
+      <button mat-flat-button [color]="isFavCheck(movie) ? 'accent' : 'warn'" (click)="toggleFav(movie)">
+        {{ isFavCheck(movie) ? 'Unfavorite' : 'Favorite' }}
+      </button>
     </mat-card-actions>
   </mat-card>
 </div>

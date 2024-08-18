@@ -1,75 +1,177 @@
+.main-profile-container {
+  padding: 20px;
+  color: #e0f7fa;
+
+  h2 {
+    margin-left: 2vw;
+    color: black; /* Moved from inline style */
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    margin-left: 5px;
+  }
+  p {
+    color: black; /* Sets the text color to black for the "No favorites here yet." message */
+    font-size: 1rem;
+    margin-left: 20px;
+  }
+}
+
 .profile-container {
-  max-width: 600px;
-  margin: 2rem auto;
-  background: #141414;
-  color: #e5e5e5;
-  border-radius: 8px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-mat-card-header {
-  background: #333;
-  color: #fff;
-  border-bottom: 1px solid #444;
-  padding: 1rem;
-  border-radius: 8px 8px 0 0;
+mat-card {
+  background-color: #0a4922;
+  color: #e0f7fa;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease-in-out;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  width: 100%;
+
+  mat-card-header {
+    background-color: #0a4922;
+    color: #e0f7fa;
+
+    mat-card-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+  }
+
+  mat-card-content {
+    padding: 20px;
+    font-size: 1rem;
+
+    p {
+      margin: 20px 0;
+      color: black;
+    }
+  }
+
+  mat-card-actions {
+    padding: 15px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+
+    button {
+      background-color: #004d40;
+      color: #e0f7fa;
+      border-radius: 5px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      font-weight: bold;
+      transition: background-color 0.3s ease-in-out;
+
+      &:hover {
+        background-color: #00796b;
+      }
+    }
+  }
+
+  &:hover {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+  }
 }
 
-mat-card-title {
-  font-size: 1.5rem;
-  font-weight: bold;
+mat-divider {
+  background-color: #00796b;
 }
 
-mat-card-content {
-  padding: 1rem;
+.favorites-container {
+  margin-top: 20px;
+
+  h2 {
+    color: black;
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    margin-left: 20px;
+  }
+
+  .movie-card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+
+    .movie-card {
+      background-color: #004d40;
+      color: #e0f7fa;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: box-shadow 0.3s ease-in-out;
+      width: 100%;
+      max-width: 300px;
+
+      mat-card-header {
+        background-color: #004d40;
+        color: #e0f7fa;
+
+        mat-card-title {
+          font-size: 1.2rem;
+          font-weight: bold;
+        }
+      }
+
+      img {
+        width: 100%;
+        height: 200px;
+        object-fit: contain;
+        background-color: #000;
+      }
+
+      mat-card-actions {
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+
+        button {
+          background-color: #004d40;
+          color: #e0f7fa;
+          &:hover {
+            background-color: #00796b;
+          }
+        }
+
+        mat-icon-button {
+          color: #e0f7fa;
+          transform: scale(1.2);
+        }
+      }
+
+      &:hover {
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+      }
+    }
+  }
 }
 
+/* Input Fields Styling */
 mat-form-field {
   width: 100%;
-  margin-bottom: 1rem;
-}
 
-mat-form-field .mat-form-field-label {
-  color: #e5e5e5;
-}
+  input {
+    background-color: white; /* White background for input fields */
+    color: #000; /* Black text color for better readability */
+    padding: 10px;
+    border-radius: 5px;
+    border: none; /* Remove any default border */
+    box-sizing: border-box; /* Ensures padding is included in the element's total width and height */
+    width: 100%; /* Ensure the input field takes up the full width of the mat-form-field */
+  }
 
-mat-form-field .mat-input-element {
-  color: #e5e5e5;
-}
+  mat-label {
+    color: #e0f7fa; /* Light teal label color */
+  }
 
-mat-form-field .mat-form-field-underline {
-  background-color: #e5e5e5;
-}
-
-mat-card-actions {
-  padding: 1rem;
-  display: flex;
-  justify-content: space-between;
-}
-
-button {
-  font-size: 1rem;
-}
-
-button.mat-raised-button {
-  padding: 0.75rem 1.5rem;
-}
-
-button.mat-raised-button.color-primary {
-  background-color: #e50914;
-  color: #fff;
-}
-
-button.mat-raised-button.color-primary:hover {
-  background-color: #f40612;
-}
-
-button.mat-raised-button.color-warn {
-  background-color: #333;
-  color: #fff;
-}
-
-button.mat-raised-button.color-warn:hover {
-  background-color: #555;
+  mat-hint {
+    color: white; /* Softer teal hint color */
+  }
 }

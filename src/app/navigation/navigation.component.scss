@@ -1,17 +1,39 @@
-nav {
+mat-toolbar {
+  background-color: #0a4922; /* Main background color */
+  height: 80px; /* Increase the height of the toolbar */
   display: flex;
   justify-content: space-between;
-  padding: 10px;
-  background-color: #333;
-  background: linear-gradient(135deg, #0a4922, #e3f2fd);
+  align-items: center; /* Ensures vertical alignment */
 
-  a {
-    background: linear-gradient(135deg, #0a4922, #e3f2fd);
-    text-decoration: none;
-    padding: 10px;
+  span {
+    color: white; /* White text color for the title */
+    font-size: 2rem; /* Increase font size for a larger look */
+    font-weight: bold; /* Make the text bold */
+    letter-spacing: 2px; /* Add more spacing between letters */
+    text-transform: uppercase; /* Make the text uppercase */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); /* Add a subtle text shadow */
+    border-bottom: 2px solid #00796b; /* Add an underline effect */
+    padding-bottom: 2px; /* Padding for underline */
   }
 
-  .active {
-    font-weight: bold;
+  .spacer {
+    flex: 1; /* Pushes the links to the right */
+  }
+
+  a {
+    color: white; /* White text color for links */
+    text-decoration: none;
+    padding: 20px; /* Increase padding for larger clickable area */
+    font-size: 1.2rem; /* Increase font size for the links */
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #004d40; /* Slightly darker color on hover */
+    }
+
+    &.active {
+      font-weight: bold; /* Make the active link bold */
+      background-color: #00796b; /* Highlight the active link with a different background */
+    }
   }
 }
