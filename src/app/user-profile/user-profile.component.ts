@@ -36,11 +36,11 @@ export class UserProfileComponent implements OnInit {
     Password: '',
     Email: '',
     Birthday: '',
-    FavouriteMovies: [],
+    FavoriteMovies: [],
   };
 
   currentUser = JSON.parse(localStorage.getItem('user') || '{}');
-  FavMovies: any[] = this.currentUser.FavouriteMovies || [];
+  FavMovies: any[] = this.currentUser.FavoriteMovies || [];
   user: any = {};
   movies: any[] = [];
 
@@ -63,7 +63,7 @@ export class UserProfileComponent implements OnInit {
       this.userData.Username = user.Username;
       this.userData.Email = user.Email;
       this.userData.Birthday = user.Birthday;
-      this.FavMovies = user.FavouriteMovies || [];
+      this.FavMovies = user.FavoriteMovies || [];
       this.fetchApiData.getAllMovies().subscribe((response) => {
         this.FavMovies = response.filter((movie: any) =>
           this.FavMovies.includes(movie._id)
@@ -107,6 +107,7 @@ export class UserProfileComponent implements OnInit {
       );
     });
   }
+
 
   isFavCheck(movie: any): boolean {
     return this.FavMovies.some((id) => id === movie._id);
@@ -157,9 +158,9 @@ export class UserProfileComponent implements OnInit {
   ): void {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     if (action === 'add') {
-      user.FavouriteMovies.push(movieId);
+      user.FavoriteMovies.push(movieId);
     } else {
-      user.FavouriteMovies = user.FavouriteMovies.filter(
+      user.FavoriteMovies = user.FavoriteMovies.filter(
         (id: string) => id !== movieId
       );
     }

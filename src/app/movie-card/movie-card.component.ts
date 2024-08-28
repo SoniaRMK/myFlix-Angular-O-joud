@@ -50,7 +50,7 @@ export class MovieCardComponent implements OnInit {
   getFavoriteMovies(): void {
     const username = JSON.parse(localStorage.getItem('user') || '{}').Username;
     this.fetchApiData.getUser(username).subscribe((user: any) => {
-      this.FavMovies = user.FavouriteMovies || [];
+      this.FavMovies = user.FavoriteMovies || [];
       console.log('Favorite movies:', this.FavMovies);
     });
   }
@@ -98,7 +98,7 @@ export class MovieCardComponent implements OnInit {
 
         // Update local storage directly
         const user = JSON.parse(localStorage.getItem('user') || '{}');
-        user.FavouriteMovies.push(movie._id);
+        user.FavoriteMovies.push(movie._id);
         localStorage.setItem('user', JSON.stringify(user));
       },
       error: (err: any) => {
@@ -133,7 +133,7 @@ export class MovieCardComponent implements OnInit {
 
         // Update local storage directly
         const user = JSON.parse(localStorage.getItem('user') || '{}');
-        user.FavouriteMovies = user.FavouriteMovies.filter(
+        user.FavoriteMovies = user.FavoriteMovies.filter(
           (id: string) => id !== movie._id
         );
         localStorage.setItem('user', JSON.stringify(user));
