@@ -1,10 +1,10 @@
 {
-  "entryPoints": ["src"],
-  "out": "docs",
-  "entryPointStrategy": "expand",
-  "exclude": ["**/*.spec.ts"],
-  "excludePrivate": true,
-  "excludeProtected": false,
-  "name": "My Angular App",
-  "theme": "default"
+  "entryPoints": ["src/app"], // Points to your app directory with all components
+  "out": "docs", // Where the documentation will be generated
+  "entryPointStrategy": "expand", // Expand all modules
+  "exclude": ["**/*.spec.ts"], // Exclude unit test files
+  "excludePrivate": true, // Exclude private methods and properties
+  "excludeProtected": false, // Includes protected methods and properties
+  "name": "My Angular App", // Name of your Angular app
+  "theme": "default" // Default theme for documentation
 }

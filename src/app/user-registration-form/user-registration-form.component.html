@@ -1,28 +1,44 @@
+<!-- HTMLHint Configuration -->
+<!-- Disabling 'attr-lowercase' and 'doctype-first' for HTMLHint -->
 <!-- htmlhint attr-lowercase:false -->
 <!-- htmlhint doctype-first:false -->
 
-<!-- src/app/user-registration-form/user-registration-form.component.html -->
+<!-- User Registration Form Component Template -->
 <mat-card>
+  <!-- Card Header with Title -->
   <mat-card-header>
     <mat-card-title>Sign Up!</mat-card-title>
   </mat-card-header>
+
+  <!-- Card Content with Form Inputs -->
   <mat-card-content>
+    <!-- User Registration Form -->
     <form>
+      <!-- Username Input Field -->
       <mat-form-field>
         <input matInput [(ngModel)]="userData.Username" placeholder="Username" type="text" name="Username" required>
       </mat-form-field>
+
+      <!-- Password Input Field -->
       <mat-form-field>
         <input matInput [(ngModel)]="userData.Password" type="password" placeholder="Password" name="Password" required>
       </mat-form-field>
+
+      <!-- Email Input Field -->
       <mat-form-field>
         <input matInput [(ngModel)]="userData.Email" type="email" placeholder="Email" name="Email" required>
       </mat-form-field>
+
+      <!-- Birthday Input Field -->
       <mat-form-field>
         <input matInput [(ngModel)]="userData.Birthday" type="date" placeholder="Birthday" name="Birthday">
       </mat-form-field>
     </form>
   </mat-card-content>
+
+  <!-- Card Actions with Submit Button -->
   <mat-card-actions>
+    <!-- Button to Submit the Form and Trigger User Registration -->
     <button mat-raised-button (click)="registerUser()" color="primary">
       Sign Up
     </button>

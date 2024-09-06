@@ -11,7 +11,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   selector: 'app-synopsis-info',
   standalone: true,
   templateUrl: './synopsis-info.component.html',
-  styleUrls: ['./synopsis-info.component.scss'], // Fixed typo: changed 'styleUrl' to 'styleUrls'
+  styleUrls: ['./synopsis-info.component.scss'],
   imports: [
     CommonModule,
     MatCardModule,

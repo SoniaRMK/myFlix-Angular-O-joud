@@ -9,6 +9,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
+/**
+ * Component for user registration form.
+ * Allows users to register by providing username, password, email, and birthday.
+ */
 @Component({
   selector: 'app-user-registration-form',
   standalone: true,
@@ -24,16 +28,36 @@ import { CommonModule } from '@angular/common';
   ],
 })
 export class UserRegistrationFormComponent implements OnInit {
+  /**
+   * Object to store user input data for registration.
+   * Contains properties: Username, Password, Email, and Birthday.
+   */
   @Input() userData = { Username: '', Password: '', Email: '', Birthday: '' };
 
+  /**
+   * Constructor for UserRegistrationFormComponent.
+   * Injects services for API data fetching, dialog reference, and snackbar notifications.
+   *
+   * @param fetchApiData Service to handle API data fetching.
+   * @param dialogRef Reference to the dialog containing this component.
+   * @param snackBar Service to display notifications.
+   */
   constructor(
     public fetchApiData: FetchApiDataService,
     public dialogRef: MatDialogRef<UserRegistrationFormComponent>,
     public snackBar: MatSnackBar
   ) {}
 
+  /**
+   * Angular lifecycle hook that is called after data-bound properties are initialized.
+   */
   ngOnInit(): void {}
 
+  /**
+   * Registers a new user by sending the user data to the backend service.
+   * Closes the dialog and displays a success notification if registration is successful.
+   * Displays an error notification if registration fails.
+   */
   registerUser(): void {
     this.fetchApiData.userRegistration(this.userData).subscribe({
       next: (result) => {

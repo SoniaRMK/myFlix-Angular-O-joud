@@ -1,43 +1,57 @@
+<!-- HTMLHint Configuration Comments -->
+<!-- Suppresses specific rules for HTMLHint -->
 <!-- htmlhint attr-lowercase:false -->
 <!-- htmlhint doctype-first:false -->
 
 <div class="main-profile-container">
+  <!-- Section for displaying user profile information -->
   <h2>User Profile</h2>
   <div class="profile-container">
+
+    <!-- Card displaying current user information -->
     <mat-card class="user-info-container">
       <mat-card-header>
+        <!-- User's username displayed as the card title -->
         <mat-card-title>{{ currentUser.Username }}</mat-card-title>
       </mat-card-header>
       <mat-card-content>
+        <!-- User's email and formatted birthday -->
         <p>Email: {{ currentUser.Email }}</p>
         <p>Birthday: {{ currentUser.Birthday | date:'longDate' }}</p>
       </mat-card-content>
     </mat-card>
 
+    <!-- Card for updating user profile information -->
     <mat-card class="user-update-container">
       <mat-card-header>
         <mat-card-title>Update Profile</mat-card-title>
       </mat-card-header>
       <mat-card-content>
+        <!-- Form for updating user profile details -->
         <form>
+          <!-- Username input field -->
           <mat-form-field appearance="outline">
             <input matInput [(ngModel)]="userData.Username" placeholder="Username" type="text" name="Username" required>
           </mat-form-field>
 
+          <!-- Password input field -->
           <mat-form-field appearance="outline">
             <input matInput [(ngModel)]="userData.Password" placeholder="Password" type="password" name="Password"
               required>
           </mat-form-field>
 
+          <!-- Email input field -->
           <mat-form-field appearance="outline">
             <input matInput [(ngModel)]="userData.Email" placeholder="Email" type="email" name="Email" required>
           </mat-form-field>
 
+          <!-- Birthday input field -->
           <mat-form-field appearance="outline">
             <input matInput [(ngModel)]="userData.Birthday" placeholder="Birthday" type="date" name="Birthday" required>
           </mat-form-field>
         </form>
 
+        <!-- Action buttons for updating or deleting user profile -->
         <mat-card-actions>
           <button mat-flat-button class="button-profile" color="warn" (click)="deleteUserProfile()">
             Delete
@@ -50,24 +64,31 @@
     </mat-card>
   </div>
 
+  <!-- Divider separating profile information from other sections -->
   <mat-divider></mat-divider>
 
+  <!-- Section for displaying user's favorite movies -->
   <div class="favorites-container">
     <div>
       <h2>Favorites</h2>
+      <!-- Message displayed when there are no favorite movies -->
       <div *ngIf="FavMovies.length === 0">
         <p>No favorites here yet.</p>
       </div>
     </div>
   </div>
 
+  <!-- Cards displaying each favorite movie -->
   <div class="movie-card-container">
     <mat-card *ngFor="let movie of FavMovies; let i = index" class="movie-card">
       <mat-card-header>
+        <!-- Movie title -->
         <mat-card-title>{{ movie.Title }}</mat-card-title>
       </mat-card-header>
+      <!-- Movie image -->
       <img [src]="movie.ImagePath" alt="{{ movie.Title }}">
       <mat-card-actions class="movie-card-actions">
+        <!-- Button to toggle favorite status of a movie -->
         <button mat-icon-button (click)="toggleFav(movie)" [color]="isFavCheck(movie) ? 'accent' : 'warn'">
           <mat-icon style="transform: scale(1.5);">
             {{ isFavCheck(movie) ? 'favorite' : 'favorite_border' }}

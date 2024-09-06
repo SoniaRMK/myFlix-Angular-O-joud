@@ -1,15 +1,20 @@
-<!-- htmlhint doctype-first:false -->
 <!-- htmlhint attr-lowercase:false -->
+<!-- User Login Form -->
 <mat-card>
   <form>
+    <!-- Username input field -->
     <mat-form-field>
       <mat-label>Username</mat-label>
       <input matInput [(ngModel)]="userData.Username" name="Username">
     </mat-form-field>
+
+    <!-- Password input field -->
     <mat-form-field>
       <mat-label>Password</mat-label>
       <input matInput [(ngModel)]="userData.Password" name="Password" type="password">
     </mat-form-field>
+
+    <!-- Login button -->
     <button mat-raised-button (click)="loginUser()">Login</button>
   </form>
 </mat-card>

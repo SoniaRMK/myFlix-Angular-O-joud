@@ -13,6 +13,10 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MovieCardComponent } from '../movie-card/movie-card.component';
 
+/**
+ * Component for displaying and updating user profile information,
+ * as well as managing the user's favorite movies.
+ */
 @Component({
   selector: 'app-user-profile',
   standalone: true,
@@ -31,6 +35,10 @@ import { MovieCardComponent } from '../movie-card/movie-card.component';
   ],
 })
 export class UserProfileComponent implements OnInit {
+  /**
+   * Object to store user data for updating profile.
+   * Initialized with default values.
+   */
   @Input() userData = {
     Username: '',
     Password: '',
@@ -39,11 +47,22 @@ export class UserProfileComponent implements OnInit {
     FavoriteMovies: [],
   };
 
+  /** Current user information loaded from local storage. */
   currentUser = JSON.parse(localStorage.getItem('user') || '{}');
+  /** List of user's favorite movies. */
   FavMovies: any[] = this.currentUser.FavoriteMovies || [];
+  /** Holds user details fetched from the API. */
   user: any = {};
+  /** List of all movies. */
   movies: any[] = [];
 
+  /**
+   * Constructor for UserProfileComponent. Injects necessary services.
+   * @param fetchApiData Service for fetching data from the API.
+   * @param snackBar Service for displaying snack-bar notifications.
+   * @param router Service for navigation.
+   * @param dialog Service for dialog operations.
+   */
   constructor(
     public fetchApiData: FetchApiDataService,
     public snackBar: MatSnackBar,
@@ -51,11 +70,18 @@ export class UserProfileComponent implements OnInit {
     public dialog: MatDialog
   ) {}
 
+  /**
+   * Angular lifecycle hook that is called after data-bound properties are initialized.
+   * Fetches user profile and favorite movies.
+   */
   ngOnInit(): void {
     this.getUserProfile();
     this.getFavMovies();
   }
 
+  /**
+   * Fetches the user's profile data from the API and updates local userData.
+   */
   getUserProfile(): void {
     const username = this.currentUser.Username;
     this.fetchApiData.getUser(username).subscribe((user: any) => {
@@ -72,6 +98,9 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
+  /**
+   * Updates the user's profile information with the provided data.
+   */
   updateUserProfile(): void {
     const username = this.currentUser.Username;
     this.fetchApiData
@@ -85,6 +114,9 @@ export class UserProfileComponent implements OnInit {
       });
   }
 
+  /**
+   * Deletes the user's profile from the database and clears local storage.
+   */
   deleteUserProfile(): void {
     const username = this.currentUser.Username;
     this.fetchApiData.deleteUser(username).subscribe((result) => {
@@ -98,6 +130,9 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
+  /**
+   * Fetches all movies and filters the user's favorite movies.
+   */
   getFavMovies(): void {
     const username = this.currentUser.Username;
     this.fetchApiData.getAllMovies().subscribe((resp: any) => {
@@ -108,11 +143,19 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
-
+  /**
+   * Checks if a movie is in the user's favorite list.
+   * @param movie The movie to check.
+   * @returns True if the movie is a favorite, false otherwise.
+   */
   isFavCheck(movie: any): boolean {
     return this.FavMovies.some((id) => id === movie._id);
   }
 
+  /**
+   * Toggles a movie's favorite status.
+   * @param movie The movie to toggle.
+   */
   toggleFav(movie: any): void {
     const isFavorite = this.isFavCheck(movie);
     if (isFavorite) {
@@ -122,6 +165,10 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
+  /**
+   * Adds a movie to the user's favorite list.
+   * @param movie The movie to add.
+   */
   addFav(movie: any): void {
     const username = this.currentUser.Username;
     this.fetchApiData
@@ -136,6 +183,10 @@ export class UserProfileComponent implements OnInit {
       });
   }
 
+  /**
+   * Removes a movie from the user's favorite list.
+   * @param movie The movie to remove.
+   */
   removeFav(movie: any): void {
     const username = this.currentUser.Username;
     this.fetchApiData
@@ -152,6 +203,11 @@ export class UserProfileComponent implements OnInit {
       });
   }
 
+  /**
+   * Updates the user's favorite movies in local storage based on action.
+   * @param movieId The movie ID to update.
+   * @param action The action to perform ('add' or 'remove').
+   */
   private updateLocalStorageFavorites(
     movieId: string,
     action: 'add' | 'remove'
